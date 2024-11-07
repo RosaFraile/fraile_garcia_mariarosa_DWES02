@@ -135,16 +135,15 @@
         $aciertos[] = "El coche está disponible";
     }
 
-    // Guardar datos en las variables de sesión
-    $_SESSION['nombre'] = $nombre;
-    $_SESSION['apellido'] = $apellido;
-    $_SESSION['modelo'] = $modelo;
-    $_SESSION['errores'] = $errores;
-    $_SESSION['aciertos'] = $aciertos;
-
-    // Redirigir a la página de mostrar el resultado de la validación de los datos
-    header('Location: mostrar-resultado.php');
-    exit;
-
-    
+    // Redirigir a la página de reserva-no-valida o a la de reserva-valida, dependiendo de si se han dado errores o no
+    if (count($errores) > 0) {
+        $_SESSION['errores'] = $errores;
+        $_SESSION['aciertos'] = $aciertos;
+        header('Location: reserva-no-valida.php');
+    } else {
+        $_SESSION['nombre'] = $nombre;
+        $_SESSION['apellido'] = $apellido;
+        $_SESSION['modelo'] = $modelo;
+        header('Location: reserva-valida.php');
+    }
 ?>
